@@ -1,4 +1,55 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+
+<div class="container">
+  <div class="row border-bottom">
+    <div class="col p-2 d-flex">
+      <p class="col p-0 m-0 fs-14">All Task</p> 
+      <button class="border ms-auto p-0 col-auto plaus" type="button" (click)="openDialog()">+</button>
+    </div>
+  </div>
+  
+    <div class="row">
+      <div class="col p-2">  
+        <mat-list class="p-0">          
+          <mat-list-item class="p-0" *ngFor="let data_arive of formList; let i = index;"> 
+            <div class="row w-100">
+              <div class="col p-0">
+                <section class="example-section" >      
+                  <mat-checkbox (click)="select(data_arive.id)" [checked]="data_arive.select == 'true'">
+                      {{data_arive.task}}
+                   </mat-checkbox>
+                </section>
+              </div>
+              <div class="col-auto p-0 ms-auto d-flex justify-content-center align-items-center">
+                <div class="newsec mr-2 position-relative cursor-pointer" *ngIf="data_arive.due_date != '' " (click)="openchange(data_arive.id)">
+                  <img src="/assets/calender.png" class="imgcls mr-1 mt-n1"  *ngIf="data_arive.expire == 'no'" />
+                  <img src="/assets/calender-red.png" class="imgcls mr-1 mt-n1"  *ngIf="data_arive.expire == 'yes'">
+                   <span [ngClass]="data_arive.expire == 'no' ? 'highlight-black' : 'highlight-red'">{{data_arive.due_date | date: 'EEE, d MMM'}}</span>
+                   <div class="position-absolute pt-3 bg-white shadow changemenu d-none" id="{{data_arive.id}}">
+                    <div class="row m-0 px-3">                        
+                       <mat-checkbox class="example-margin" >Today</mat-checkbox>
+                    </div>
+                    <div class="row m-0 px-3">                        
+                       <mat-checkbox class="example-margin" >Tomorrow</mat-checkbox>
+                    </div>
+                    <div class="row m-0 px-3">                        
+                       <mat-checkbox class="example-margin" >Next Week</mat-checkbox>
+                    </div>
+                    <div class="row m-0 p-3" style="background-color: #e9e6e6;">                           
+                       <img src="/assets/calender.png" class="imgcls mr-1 mt-1"/>
+                       <p class="m-0">pick Date or time</p>
+                    </div>
+                   </div>
+                </div>
+                <div class="newsec mr-2" *ngIf="data_arive.rem_date != '' && data_arive.expire == 'no'">
+                  <img src="/assets/bell.png" class="imgcls mr-1 mt-n1" > {{data_arive.rem_date | date: 'EEE, d MMM'}} at {{data_arive.rem_time}}
+                </div>
+                <p class="m-0 text-gray fs-12 mr-2">Created</p>
+                <p class="m-0 fs-12"> {{data_arive.current_dt | date: 'EEE, d MMM'}}</p>
+              </div>
+            </div>
+          </mat-list-item> 
+        </mat-list>       
+      </div>
+    </div>
+    </div>
+    
